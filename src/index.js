@@ -4,12 +4,14 @@ import http from 'http';
 import fs from 'fs';
 
 http.createServer((req, res) => {
+  if (req.url === '/') req.url = '/index.html';
+    console.log(req.url);
   fs.access('src/pages' + req.url, (err) => {
     if (!err) {
       if (req.url.substr(req.url.length - 3) === '.js') {
-        res.writeHead(202, {'Content-Type': 'text/javascript'});
+        res.writeHead(200, {'Content-Type': 'text/javascript'});
       } else if (req.url.substr(req.url.length - 5) === '.html') {
-        res.writeHead(202, {'Content-Type': 'text/html'});
+        res.writeHead(200, {'Content-Type': 'text/html'});
       }
       fs.createReadStream('src/pages' + req.url).pipe(res);
 
