@@ -1,49 +1,49 @@
 class Matrix {
-  constructor(rows, cols) {
+  constructor(rows, columns) {
     this.rows = rows;
-    this.cols = cols;
-    this.matrix = [];
+    this.columns = columns;
+    this.data = [];
 
     for (let i = 0; i < this.rows; i++) {
-      this.matrix[i] = [];
-      for (let j = 0; j < this.cols; j++) {
-        this.matrix[i][j] = 0;
+      this.data[i] = [];
+      for (let j = 0; j < this.columns; j++) {
+        this.data[i][j] = 0;
       }
     }
   }
 
   randomize() {
-    for (let i = 0; i < this.rows; i++) {
-      for (let j = 0; j < this.cols; j++) {
-        this.matrix[i][j] = Math.floor(Math.random() * 10);
-      }
-    }
+    const result = MatrixMath.randomize(this);
+    this.data = result.data;
   }
 
   add(addend) {
-    if (this.cols != addend.cols) {
-      console.error(
-        'When adding matrixes, the columns must be of equal length. Currently',
-        this.cols,
-        addend.cols
-      );
-      return;
-    }
-
-    if (this.rows != addend.rows) {
-      console.error(
-        'When adding matrixes, the rows must be of equal length. Currently',
-        this.rows,
-        addend.rows
-      );
-      return;
-    }
-
-    for (let i = 0; i < this.rows; i++) {
-      for (let j = 0; j < this.cols; j++) {
-        this.matrix[i][j] += addend.matrix[i][j];
-      }
-    }
+    const result = MatrixMath.add(this, addend);
+    this.data = result.data;
   }
 
+  addScalar(addend) {
+    const result = MatrixMath.addScalar(this, addend);
+    this.data = result.data;
+  }
+
+  addElementWise(matrixAddend) {
+    const result = MatrixMath.addScalar(this, matrixAddend);
+    this.data = result.data;
+  }
+
+  multiply(multiplicand) {
+    const result = MatrixMath.multiply(this, multiplicand);
+    this.data = result.data;
+  }
+
+  multiplyScalar(multiplicand) {
+    const result = MatrixMath.addScalar(this, multiplicand);
+    this.data = result.data;
+  }
+
+  multiplyElementWise(matrixMultiplicand) {
+    const result = MatrixMath.addScalar(this, matrixMultiplicand);
+    this.data = result.data;
+  }
 }
